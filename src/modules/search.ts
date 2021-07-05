@@ -8,14 +8,16 @@ import Song from '../classes/song'
 export interface Filter {
   genre?: number
   mood?: string
+  search?: string
 }
 
 export const search = (filter: Filter, page?: number): Promise<Song[]> => {
   return new Promise<Song[]>((resolve, reject) => {
     fetch(
-      `https://ncs.io/music?page=${page ? page : 1}${
+      `https://ncs.io/music-search?page=${page ? page : 1}${
         filter.genre ? `&genre=${filter.genre}` : ''
-      }${filter.mood ? `&mood=${filter.mood}` : ''}`
+      }${filter.mood ? `&mood=${filter.mood}` : ''
+      }${filter.search ? `&q=${filter.search}` : ''}`
     )
       .then(res => res.text())
       .then(html => {
