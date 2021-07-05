@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc --module CommonJS --outDir dist/cjs && tsc --module ES2020 --outDir dist/esm",
     "buildWatch": "tsc --watch",
-    "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\""
+    "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
+    "publish": "npm run build"
   },
   "keywords": [],
   "author": "KaninchenSpeed",
