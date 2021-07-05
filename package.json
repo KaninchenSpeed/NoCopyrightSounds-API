@@ -1,5 +1,5 @@
 {
-  "name": "ncs_api",
+  "name": "nocopyrightsounds-api",
   "version": "1.0.0",
   "description": "A webscraper for the NoCopyrightSounds website to provide an API",
   "main": "dist/cjs/main.js",
@@ -8,7 +8,7 @@
     "build": "tsc --module CommonJS --outDir dist/cjs && tsc --module ES2020 --outDir dist/esm",
     "buildWatch": "tsc --watch",
     "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
-    "publish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "author": "KaninchenSpeed",
