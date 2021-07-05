@@ -13,7 +13,8 @@
     "buildWatch": "tsc --watch",
     "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
     "prepublishOnly": "npm run build && npm run prettier && npm version patch",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "test": "tsc -p tests/tsconfig.test.json && node tests/dist/tests/main.test.js"
   },
   "keywords": [],
   "author": "KaninchenSpeed",

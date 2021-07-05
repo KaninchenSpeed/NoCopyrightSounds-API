@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "outDir": "dist",
+    "strict": true,
+    "moduleResolution": "Node"
+  }
+}
