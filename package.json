@@ -1,0 +1,24 @@
+{
+  "name": "ncs_api",
+  "version": "1.0.0",
+  "description": "A webscraper for the NoCopyrightSounds website to provide an API",
+  "main": "dist/cjs/main.js",
+  "module": "dist/esm/main.js",
+  "scripts": {
+    "build": "tsc --module CommonJS --outDir dist/cjs && tsc --module ES2020 --outDir dist/esm",
+    "buildWatch": "tsc --watch",
+    "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\""
+  },
+  "keywords": [],
+  "author": "KaninchenSpeed",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.10",
+    "concurrently": "^6.2.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "node-html-parser": "^3.3.6"
+  }
+}

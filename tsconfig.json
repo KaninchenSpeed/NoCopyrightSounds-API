@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "strict": true,
+    "declaration": true,
+    "moduleResolution": "Node"
+  },
+  "include": [
+    "./src"
+  ]
+}
