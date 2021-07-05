@@ -16,8 +16,9 @@ export const search = (filter: Filter, page?: number): Promise<Song[]> => {
     fetch(
       `https://ncs.io/music-search?page=${page ? page : 1}${
         filter.genre ? `&genre=${filter.genre}` : ''
-      }${filter.mood ? `&mood=${filter.mood}` : ''
-      }${filter.search ? `&q=${filter.search}` : ''}`
+      }${filter.mood ? `&mood=${filter.mood}` : ''}${
+        filter.search ? `&q=${filter.search}` : ''
+      }`
     )
       .then(res => res.text())
       .then(html => {
