@@ -13,7 +13,7 @@ export const promise = (feature: Function, arglist: any[][]): Promise<any> => {
       arglist.map((arg: any[]): Promise<any> => {
         return new Promise(async (res, rej) => {
           try {
-            const out = await feature.call(arg)
+            const out = await feature(...arg)
             res(out)
           } catch (err) {
             rej(err)
@@ -39,7 +39,7 @@ export const normal = (feature: Function, arglist: any[][]): Promise<any> => {
       arglist.map((arg: any[]): Promise<any> => {
         return new Promise(async (res, rej) => {
           try {
-            const out = feature.call(arg)
+            const out = feature(...arg)
             res(out)
           } catch (err) {
             rej(err)
