@@ -1,4 +1,4 @@
-export const promise = (feature: Function, arglist: any[][]): any => {
+export const promise = (feature: Function, arglist: any[][]): Promise<any> => {
   if (arglist == []) {
     return new Promise(async (res, rej) => {
       try {
@@ -24,7 +24,7 @@ export const promise = (feature: Function, arglist: any[][]): any => {
   }
 }
 
-export const normal = (feature: Function, arglist: any[][]): any => {
+export const normal = (feature: Function, arglist: any[][]): Promise<any> => {
   if (arglist == []) {
     return new Promise(async (res, rej) => {
       try {
