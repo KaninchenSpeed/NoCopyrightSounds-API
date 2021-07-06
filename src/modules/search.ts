@@ -7,7 +7,7 @@ import Song from '../classes/song'
 
 export interface Filter {
   genre?: number
-  mood?: string
+  mood?: number
   search?: string
 }
 
