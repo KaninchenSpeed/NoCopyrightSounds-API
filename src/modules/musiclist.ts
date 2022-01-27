@@ -14,13 +14,13 @@ export const getMusic = (page?: number): Promise<Song[]> => {
       .then(html => {
         const root = cheerio.load(html)
         const songsHtml = root('div.col-lg-2.item').toArray()
-        const songs: Song[] = songsHtml.map((song) => {
+        const songs: Song[] = songsHtml.map(song => {
           const img_link = root('a[href]', song)
           const link = String(img_link.attr('href'))
 
           const date = String(root('p[title]', song).attr('title'))
           const genre = root('.row strong', song).html()!
-          
+
           const btn = root('.btn', song)
           const imageUrl = String(btn.attr('data-cover'))
           const name = String(btn.attr('data-track'))
