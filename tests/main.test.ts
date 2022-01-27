@@ -52,3 +52,5 @@ const run = async () => {
 }
 
 run()
+
+ncs.getMusic().then(songs => console.log(songs[0]))
