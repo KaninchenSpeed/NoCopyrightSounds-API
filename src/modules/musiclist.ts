@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
+import cheerio from 'cheerio'
 import { parse as parseHTML } from 'node-html-parser'
-import type { HTMLElement } from 'node-html-parser'
 
 import Artist from '../classes/artist'
 import Song from '../classes/song'
@@ -12,32 +12,28 @@ export const getMusic = (page?: number): Promise<Song[]> => {
         return res.text()
       })
       .then(html => {
-        const root = parseHTML(html)
-        const songsHtml = root.querySelectorAll('div.col-lg-2.item')
-        const songs: Song[] = songsHtml.map((song: HTMLElement) => {
-          const link = song.querySelector('a[href]').getAttribute('href')
-          const imageUrl = song
-            .querySelector('div.img[style]')
-            .getAttribute('style')
-            ?.split("'")[1]
-          const name = song.querySelector('.bottom p strong').innerHTML
-          const optionsEl = song.querySelector('div.options')
-          const date = optionsEl.querySelector('p[title]').getAttribute('title')
-          const genre = optionsEl.querySelector('strong').innerHTML
-          const songLinkEl = optionsEl.querySelector('a.btn.black.player-play')
-          const songUrl = songLinkEl.getAttribute('data-url')
-          const artistsEl = songLinkEl.getAttribute('data-artist')
+        const root = cheerio.load(html)
+        const songsHtml = root('div.col-lg-2.item').toArray()
+        const songs: Song[] = songsHtml.map((song) => {
+          const img_link = root('a[href]', song)
+          const link = String(img_link.attr('href'))
 
-          if (!artistsEl || !name || !date || !link || !imageUrl || !songUrl)
-            return new Song('', '', '', [], '', '', '')
+          const date = String(root('p[title]', song).attr('title'))
+          const genre = root('.row strong', song).html()!
+          
+          const btn = root('.btn', song)
+          const imageUrl = String(btn.attr('data-cover'))
+          const name = String(btn.attr('data-track'))
+          const songUrl = String(btn.attr('data-url'))
+          const artistsEl = String(btn.attr('data-artist'))
+
           const artists: Artist[] = artistsEl
             ?.split(', ')
             .map((art: string) => {
-              const artEl = parseHTML(art)
-              const url = artEl.getAttribute('href')
+              const artEl = parseHTML(art).querySelector('a')
+              const url = artEl.getAttribute('href')!
               const name = artEl.innerHTML
-              if (!url) return new Artist(name, '')
-              else return new Artist(name, url)
+              return new Artist(name, url)
             })
           return new Song(name, date, genre, artists, link, imageUrl, songUrl)
         })
