@@ -22,7 +22,10 @@ export const getMusic = (page?: number): Promise<Song[]> => {
           const genre = root('.row strong', song).html()!
 
           const btn = root('.btn', song)
-          const imageUrl = String(btn.attr('data-cover'))
+          const imageUrl = String(btn.attr('data-cover')).replace(
+            /100x100/g,
+            '325x325'
+          )
           const name = String(btn.attr('data-track'))
           const songUrl = String(btn.attr('data-url'))
           const artistsEl = String(btn.attr('data-artist'))
