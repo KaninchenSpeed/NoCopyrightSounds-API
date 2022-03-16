@@ -1,7 +1,5 @@
-import fetch from 'node-fetch'
-import { parse as parseHTML } from 'node-html-parser'
-import type { HTMLElement } from 'node-html-parser'
-import cheerio from 'cheerio'
+import { JSDOM } from 'jsdom'
+import axios from 'axios'
 
 import Artist from '../classes/artist'
 import Song from '../classes/song'
@@ -12,64 +10,52 @@ export interface Filter {
   search?: string
 }
 
-export const search = (filter: Filter, page = 1): Promise<Song[]> => {
-  return new Promise<Song[]>((resolve, reject) => {
-    fetch(
-      `https://ncs.io/music-search?page=${page}${
-        filter.genre ? `&genre=${filter.genre}` : ''
-      }${filter.mood ? `&mood=${filter.mood}` : ''}${
-        filter.search ? `&q=${filter.search}` : ''
-      }`
-    )
-      .then(res => res.text())
-      .then(html => {
-        const root = cheerio.load(html)
-        const table = root('.tablesorter tbody')
-        const songsHtml = root(table, 'tr').toArray()
-        const songs: Song[] = songsHtml.map(song => {
-          const [
-            player_col,
-            genre_col,
-            img_col,
-            main_col,
-            tags_col,
-            date_col,
-            tracks_col,
-            _
-          ] = root('td', song).toArray()
-
-          const link = root('a', main_col).attr('href')!
-
-          const date_raw = root('td[style="width:15%;"]', song)
-            .filter(i => i == 1)
-            .html()!
-          const date_d = new Date(date_raw)
-          const date = `${date_d.getFullYear()}-${date_d.getMonth()}-${date_d.getDate()}`
-          const genre = root('.genre', genre_col).attr('title')!
-
-          const player = root('.player-play', player_col)
-          const imageUrl = String(player.attr('data-cover')).replace(
-            /100x100/g,
-            '325x325'
-          )
-          const name = String(player.attr('data-track'))
-          const songUrl = String(player.attr('data-url'))
-          const artistsEl = String(player.attr('data-artist'))
-
-          const artists: Artist[] = artistsEl
-            ?.split(', ')
-            .map((art: string) => {
-              const artEl = parseHTML(art.replace(/'/g, '"')).querySelector('a')
-              const url = artEl.getAttribute('href')!
-              const name = artEl.innerHTML
-              return new Artist(name, url)
-            })
-          return new Song(name, date, genre, artists, link, imageUrl, songUrl)
-        })
-        resolve(songs)
-      })
-      .catch(err => {
-        reject(err)
-      })
+export const search = async (filter: Filter, page = 1): Promise<Song[]> => {
+  const { data: html } = await axios.get<string>(`https://ncs.io/music-search?page=${page}${
+    filter.genre ? `&genre=${filter.genre}` : ''
+  }${filter.mood ? `&mood=${filter.mood}` : ''}${
+    filter.search ? `&q=${filter.search}` : ''
+  }`, {
+    responseType: 'text'
   })
+  const dom = new JSDOM(html)
+  const document = dom.window.document
+  const table = document.querySelector('.tablesorter tbody')!
+  const song_els = table.querySelectorAll('tr')
+  const songs: Song[] = Array.from(song_els).map(el => {
+    const [
+      player_col,
+      genre_col,
+      img_col,
+      main_col,
+      tags_col,
+      date_col,
+      tracks_col,
+      _
+    ] = Array.from(el.querySelectorAll('td'))
+
+    const url = main_col.querySelector('a')!.href
+    const date_obj = new Date(el.querySelectorAll('td[style="width:15%;"]')[1].innerHTML)
+    const date = `${date_obj.getFullYear()}-${date_obj.getMonth()}-${date_obj.getDate()}`
+    const genre = genre_col.querySelector('.genre')!.getAttribute('title')!
+
+    const player = player_col.querySelector('.player-play')!
+    const cover = player.getAttribute('data-cover')!.replace(
+      /100x100/g,
+      '325x325'
+    )
+    const name = player.getAttribute('data-track')!
+    const song_url = player.getAttribute('data-url')!
+
+    const artists_el = player.getAttribute('data-artist')!
+    const artists: Artist[] = artists_el.split(', ').map(art => {
+      const art_el = new JSDOM(art).window.document.querySelector('a')!
+      const url = art_el.getAttribute('href')!
+      const name = art_el.innerHTML
+      return new Artist(name, url)
+    })
+
+    return new Song(name, date, genre, artists, url, cover, song_url)
+  })
+  return songs
 }

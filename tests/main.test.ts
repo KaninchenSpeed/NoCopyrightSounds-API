@@ -8,10 +8,9 @@ ncs.getMusic().then(songs => {
 console.log('running Search')
 ncs
   .search({
-    genre: 1,
-    mood: 1
+    search: 'you'
   })
   .then(res => {
     console.log('results Search')
-    console.log(res[0])
+    console.log(res[0], res.length)
   })
