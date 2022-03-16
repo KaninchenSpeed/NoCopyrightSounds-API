@@ -11,13 +11,16 @@ export interface Filter {
 }
 
 export const search = async (filter: Filter, page = 1): Promise<Song[]> => {
-  const { data: html } = await axios.get<string>(`https://ncs.io/music-search?page=${page}${
-    filter.genre ? `&genre=${filter.genre}` : ''
-  }${filter.mood ? `&mood=${filter.mood}` : ''}${
-    filter.search ? `&q=${filter.search}` : ''
-  }`, {
-    responseType: 'text'
-  })
+  const { data: html } = await axios.get<string>(
+    `https://ncs.io/music-search?page=${page}${
+      filter.genre ? `&genre=${filter.genre}` : ''
+    }${filter.mood ? `&mood=${filter.mood}` : ''}${
+      filter.search ? `&q=${filter.search}` : ''
+    }`,
+    {
+      responseType: 'text'
+    }
+  )
   const dom = new JSDOM(html)
   const document = dom.window.document
   const table = document.querySelector('.tablesorter tbody')!
@@ -35,15 +38,16 @@ export const search = async (filter: Filter, page = 1): Promise<Song[]> => {
     ] = Array.from(el.querySelectorAll('td'))
 
     const url = main_col.querySelector('a')!.href
-    const date_obj = new Date(el.querySelectorAll('td[style="width:15%;"]')[1].innerHTML)
+    const date_obj = new Date(
+      el.querySelectorAll('td[style="width:15%;"]')[1].innerHTML
+    )
     const date = `${date_obj.getFullYear()}-${date_obj.getMonth()}-${date_obj.getDate()}`
     const genre = genre_col.querySelector('.genre')!.getAttribute('title')!
 
     const player = player_col.querySelector('.player-play')!
-    const cover = player.getAttribute('data-cover')!.replace(
-      /100x100/g,
-      '325x325'
-    )
+    const cover = player
+      .getAttribute('data-cover')!
+      .replace(/100x100/g, '325x325')
     const name = player.getAttribute('data-track')!
     const song_url = player.getAttribute('data-url')!
 
