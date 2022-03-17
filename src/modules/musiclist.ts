@@ -1,49 +1,49 @@
-import fetch from 'node-fetch'
-import cheerio from 'cheerio'
-import { parse as parseHTML } from 'node-html-parser'
+import { JSDOM } from 'jsdom'
+import axios from 'axios'
 
 import Artist from '../classes/artist'
 import Song from '../classes/song'
 
-export const getMusic = (page?: number): Promise<Song[]> => {
-  return new Promise<Song[]>((resolve, reject) => {
-    fetch(`https://ncs.io/music?page=${page ? page : 1}`)
-      .then(res => {
-        return res.text()
-      })
-      .then(html => {
-        const root = cheerio.load(html)
-        const songsHtml = root('div.col-lg-2.item').toArray()
-        const songs: Song[] = songsHtml.map(song => {
-          const img_link = root('a[href]', song)
-          const link = String(img_link.attr('href'))
+export const getMusic = async (page?: number): Promise<Song[]> => {
+  const { data: html } = await axios.get<string>(
+    `https://ncs.io/music?page=${page ? page : 1}`,
+    {
+      responseType: 'text'
+    }
+  )
 
-          const date = String(root('p[title]', song).attr('title'))
-          const genre = root('.row strong', song).html()!
+  const dom = new JSDOM(html)
+  const document = dom.window.document.body
 
-          const btn = root('.btn', song)
-          const imageUrl = String(btn.attr('data-cover')).replace(
-            /100x100/g,
-            '325x325'
-          )
-          const name = String(btn.attr('data-track'))
-          const songUrl = String(btn.attr('data-url'))
-          const artistsEl = String(btn.attr('data-artist'))
+  const song_els = document.querySelectorAll('div.col-lg-2.item')
+  const songs = Array.from(song_els).map(song_el => {
+    const img_link_el = song_el.querySelector<HTMLAnchorElement>('a[href]')!
+    const url = img_link_el.href
 
-          const artists: Artist[] = artistsEl
-            ?.split(', ')
-            .map((art: string) => {
-              const artEl = parseHTML(art).querySelector('a')
-              const url = artEl.getAttribute('href')!
-              const name = artEl.innerHTML
-              return new Artist(name, url)
-            })
-          return new Song(name, date, genre, artists, link, imageUrl, songUrl)
-        })
-        resolve(songs)
-      })
-      .catch(err => {
-        reject(err)
-      })
+    const info_el = song_el.querySelector('.col-6')!
+    const date_el = info_el.querySelector('p[title]')!
+    const [ year, month, day ] = date_el.getAttribute('title')!.split('-').map(v => Number(v))
+    const date_obj = new Date() //for future api interface
+    date_obj.setFullYear(year, month, day)
+    const date = `${date_obj.getFullYear()}-${date_obj.getMonth()}-${date_obj.getDate()}`
+    const genre = info_el.querySelector('span strong')?.innerHTML!
+    
+    const player = song_el.querySelector('.btn')!
+    const cover = player
+      .getAttribute('data-cover')!
+      .replace(/100x100/g, '325x325')
+    const name = player.getAttribute('data-track')!
+    const song_url = player.getAttribute('data-url')!
+
+    const artists_el = player.getAttribute('data-artist')!
+    const artists: Artist[] = artists_el.split(', ').map(art => {
+      const art_el = new JSDOM(art).window.document.querySelector('a')!
+      const url = art_el.getAttribute('href')!
+      const name = art_el.innerHTML
+      return new Artist(name, url)
+    })
+
+    return new Song(name, date, genre, artists, url, cover, song_url)
   })
+  return songs
 }
