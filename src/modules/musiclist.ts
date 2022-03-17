@@ -22,12 +22,15 @@ export const getMusic = async (page?: number): Promise<Song[]> => {
 
     const info_el = song_el.querySelector('.col-6')!
     const date_el = info_el.querySelector('p[title]')!
-    const [ year, month, day ] = date_el.getAttribute('title')!.split('-').map(v => Number(v))
+    const [year, month, day] = date_el
+      .getAttribute('title')!
+      .split('-')
+      .map(v => Number(v))
     const date_obj = new Date() //for future api interface
     date_obj.setFullYear(year, month, day)
     const date = `${date_obj.getFullYear()}-${date_obj.getMonth()}-${date_obj.getDate()}`
     const genre = info_el.querySelector('span strong')?.innerHTML!
-    
+
     const player = song_el.querySelector('.btn')!
     const cover = player
       .getAttribute('data-cover')!
