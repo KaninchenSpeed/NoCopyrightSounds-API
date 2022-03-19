@@ -1,8 +1,8 @@
 import { JSDOM } from 'jsdom'
 import axios from 'axios'
 
-import Artist from '../classes/artist'
-import Song from '../classes/song'
+import type Artist from '../classes/artist'
+import type Song from '../classes/song'
 
 export const getMusic = async (page?: number): Promise<Song[]> => {
   const { data: html } = await axios.get<string>(
@@ -16,7 +16,7 @@ export const getMusic = async (page?: number): Promise<Song[]> => {
   const document = dom.window.document.body
 
   const song_els = document.querySelectorAll('div.col-lg-2.item')
-  const songs = Array.from(song_els).map(song_el => {
+  const songs = Array.from(song_els).map<Song>(song_el => {
     const img_link_el = song_el.querySelector<HTMLAnchorElement>('a[href]')!
     const url = img_link_el.href
 
@@ -43,10 +43,18 @@ export const getMusic = async (page?: number): Promise<Song[]> => {
       const art_el = new JSDOM(art).window.document.querySelector('a')!
       const url = art_el.getAttribute('href')!
       const name = art_el.innerHTML
-      return new Artist(name, url)
+      return { name, url }
     })
 
-    return new Song(name, date, genre, artists, url, cover, song_url)
+    return {
+      name,
+      url,
+      date,
+      genre,
+      artists,
+      imageUrl: cover,
+      songUrl: song_url
+    }
   })
   return songs
 }

@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom'
 
-import Song from '../classes/song'
-import Artist from '../classes/artist'
+import type Song from '../classes/song'
+import type Artist from '../classes/artist'
 
 export default (table: Element) => {
   const rows = table.querySelectorAll('tr')
@@ -36,10 +36,18 @@ export default (table: Element) => {
       const art_el = new JSDOM(art).window.document.querySelector('a')!
       const url = art_el.getAttribute('href')!
       const name = art_el.innerHTML
-      return new Artist(name, url)
+      return { name, url }
     })
 
-    return new Song(name, date, genre, artists, url, cover, song_url)
+    return {
+      name,
+      url,
+      date,
+      genre,
+      artists,
+      imageUrl: cover,
+      songUrl: song_url
+    }
   })
   return songs
 }
