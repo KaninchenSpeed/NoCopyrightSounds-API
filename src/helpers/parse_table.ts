@@ -44,7 +44,11 @@ export default (table: Element) => {
     const tags = Array.from(tags_els).map<Tag>(el => {
       const name = el.innerHTML
       const css = el.style.backgroundColor
-      const [ r, g, b ] = css.replace('rgb(', '').replace(')', '').split(', ').map(v => Number(v))
+      const [r, g, b] = css
+        .replace('rgb(', '')
+        .replace(')', '')
+        .split(', ')
+        .map(v => Number(v))
       const url = el.href
       const mood = url.split('?')[1].replace('mood=', '')
       return {

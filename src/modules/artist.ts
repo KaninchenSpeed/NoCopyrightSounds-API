@@ -5,14 +5,15 @@ import parse_table from '../helpers/parse_table'
 import type Artist from '../classes/artist'
 import type Song from '../classes/song'
 
-
 interface Artist_info extends Artist {
   genres: string[]
   featured: Song[]
   songs: Song[]
 }
 
-export const getArtistInfo = async (artist_url: string | Artist): Promise<Artist_info> => {
+export const getArtistInfo = async (
+  artist_url: string | Artist
+): Promise<Artist_info> => {
   if (typeof artist_url != 'string') artist_url = artist_url.url
   const { data: html } = await axios.get<string>(
     `https://ncs.io${artist_url}`,
