@@ -29,7 +29,11 @@ export const getArtistInfo = async (
   const info_el = document.querySelector('.details .info')!
   const name = info_el.querySelector('h5')!.innerHTML
   const genres = info_el.querySelector('.tags')!.innerHTML.split(', ')
-  const img = info_el.querySelector<HTMLDivElement>('.img')!.style.backgroundImage.trim().replace("url('", '').replace("')", '')
+  const img = info_el
+    .querySelector<HTMLDivElement>('.img')!
+    .style.backgroundImage.trim()
+    .replace("url('", '')
+    .replace("')", '')
 
   const fearured_el = document.querySelector('.featured tbody')
   const featured: Song[] = !fearured_el ? [] : parse_table(fearured_el)
