@@ -15,3 +15,9 @@ ncs
     console.log('results Search')
     console.log(res[0], res.length)
   })
+
+console.log('running artist info')
+ncs.getArtistInfo('/artist/466/unknown-brain').then(res => {
+  console.log('results artist info')
+  console.log({...res, songs: [res.songs[0]]})
+})
