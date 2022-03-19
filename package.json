@@ -12,7 +12,7 @@
     "build": "tsc --module CommonJS --outDir dist/cjs && tsc --module ES2020 --outDir dist/esm",
     "buildWatch": "tsc --watch --module CommonJS --outDir dist/cjs && tsc --watch --module ES2020 --outDir dist/esm",
     "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
-    "prepublishOnly": "npm run build && npm run prettier && npm version patch",
+    "prepublishOnly": "npm run build && npm run prettier",
     "prettier": "prettier --write .",
     "test": "tsc -p tests/tsconfig.test.json && node tests/dist/tests/main.test.js"
   },
