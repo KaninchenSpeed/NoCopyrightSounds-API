@@ -1,4 +1,5 @@
 import type Artist from './artist'
+import type Tag from './tag'
 
 export default interface Song {
   name: string
@@ -8,4 +9,5 @@ export default interface Song {
   url: string
   imageUrl: string
   songUrl: string
+  tags?: Tag[]
 }

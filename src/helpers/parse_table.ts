@@ -2,10 +2,11 @@ import { JSDOM } from 'jsdom'
 
 import type Song from '../classes/song'
 import type Artist from '../classes/artist'
+import type Tag from '../classes/tag'
 
 export default (table: Element) => {
   const rows = table.querySelectorAll('tr')
-  const songs = Array.from(rows).map(el => {
+  const songs = Array.from(rows).map<Song>(el => {
     const [
       player_col,
       genre_col,
@@ -39,6 +40,20 @@ export default (table: Element) => {
       return { name, url }
     })
 
+    const tags_els = tags_col.querySelectorAll('a')
+    const tags = Array.from(tags_els).map<Tag>(el => {
+      const name = el.innerHTML
+      const css = el.style.backgroundColor
+      const [ r, g, b ] = css.replace('rgb(', '').replace(')', '').split(', ').map(v => Number(v))
+      const url = el.href
+      const mood = url.split('?')[1].replace('mood=', '')
+      return {
+        name,
+        color: { r, g, b },
+        mood: Number(mood)
+      }
+    })
+
     return {
       name,
       url,
@@ -46,7 +61,8 @@ export default (table: Element) => {
       genre,
       artists,
       imageUrl: cover,
-      songUrl: song_url
+      songUrl: song_url,
+      tags: tags.length == 0 ? undefined : tags
     }
   })
   return songs

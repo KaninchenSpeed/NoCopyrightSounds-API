@@ -13,7 +13,7 @@ ncs
   })
   .then(res => {
     console.log('results Search')
-    console.log(res[0], res.length)
+    console.log(res[0], res.length, res[0].tags?.at(0), res[0].tags?.length)
   })
 
 console.log('running artist info')
