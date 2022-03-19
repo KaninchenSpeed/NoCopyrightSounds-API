@@ -17,7 +17,7 @@ ncs
   })
 
 console.log('running artist info')
-ncs.getArtistInfo('/artist/466/unknown-brain').then(res => {
+ncs.getArtistInfo('/artist/172/harley-bird').then(res => {
   console.log('results artist info')
   console.log({ ...res, songs: [res.songs[0]] })
 })
