@@ -105,7 +105,9 @@ export default class SongCache {
     var cp = 1
     const appendCache: Song[] = []
     while (true) {
-      const songs = this.web ? await web.getSongs(this.proxy_url, cp) : await search({}, cp)
+      const songs = this.web
+        ? await web.getSongs(this.proxy_url, cp)
+        : await search({}, cp)
       const newSongs = songs.filter(
         song => !this.songs.find(s => s.songUrl == song.songUrl)
       )
