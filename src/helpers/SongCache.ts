@@ -1,4 +1,5 @@
 import { search } from '../modules/search'
+import web from '../modules/web'
 
 import type Song from '../api/Song'
 import type Listener from './Listener'
@@ -7,6 +8,7 @@ export type events = 'save' | 'ready'
 
 export interface CacheOptions {
   web: boolean
+  proxy_url: string
   cache_path?: string
   detailed_log?: boolean
 }
@@ -15,6 +17,7 @@ export default class SongCache {
   public songs: Song[] = []
   private listeners: Listener<events, null>[] = []
   protected path: string | undefined
+  protected proxy_url: string
   protected detailed_log = false
   protected web = false
   protected is_ready = false
@@ -22,6 +25,7 @@ export default class SongCache {
   public constructor(options: CacheOptions) {
     this.web = options.web
     this.path = options.cache_path
+    this.proxy_url = options.proxy_url
     this.detailed_log = options.detailed_log ?? false
 
     this.load()
@@ -97,7 +101,7 @@ export default class SongCache {
     var cp = 1
     const appendCache: Song[] = []
     while (true) {
-      const songs = await search({}, cp)
+      const songs = this.web ? await web.getSongs(this.proxy_url, cp) : await search({}, cp)
       const newSongs = songs.filter(
         song => !this.songs.find(s => s.songUrl == song.songUrl)
       )

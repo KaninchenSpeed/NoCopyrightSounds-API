@@ -29,6 +29,7 @@ export default class NCSClient {
     if (options.use_cache) {
       this.cache = new SongCache({
         web: this.web,
+        proxy_url: this.proxy_url,
         cache_path: options.cache_path,
         detailed_log: this.detailed_log
       })
