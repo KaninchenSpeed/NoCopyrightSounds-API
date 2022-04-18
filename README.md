@@ -4,8 +4,11 @@ This is a webscraper designed to provide api like access to the NCS website
 
 ## Features
 
-- List
-- Search
+- Listing all Songs
+- Searching (using the search from the website)
+- getting artist info
+
+- caching songs (client class only)
 
 ## import
 
