@@ -82,6 +82,10 @@ export default class SongCache {
     this.listeners.splice(index, 1)
   }
 
+  public isReady() {
+    return this.is_ready
+  }
+
   private addSongs(...songs: Song[]) {
     this.songs = [...songs, ...this.songs]
     this.save()
