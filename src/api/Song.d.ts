@@ -1,5 +1,5 @@
-import type Artist from './artist'
-import type Tag from './tag'
+import type Artist from './Artist'
+import type Tag from './Tag'
 
 export default interface Song {
   name: string

@@ -1,10 +1,11 @@
 import { JSDOM } from 'jsdom'
 
-import type Song from '../classes/song'
-import type Artist from '../classes/artist'
-import type Tag from '../classes/tag'
+import type Song from '../api/Song'
+import type Artist from '../api/Artist'
+import type Tag from '../api/Tag'
 
 export default (table: Element) => {
+  if (!table) return []
   const rows = table.querySelectorAll('tr')
   const songs = Array.from(rows).map<Song>(el => {
     const [

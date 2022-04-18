@@ -1,4 +1,4 @@
-import type Color from './color'
+import type Color from './Color'
 
 export default interface Tag {
   name: string

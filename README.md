@@ -19,6 +19,8 @@ const ncs = require('nocopyrightsounds-api')
 
 ## examples
 
+## direct API Access
+
 ### get all songs from the first page in the music library
 
 ```js
@@ -57,6 +59,22 @@ ncs
   })
 ```
 
+### get artist info
+
+```js
+import * as ncs from 'nocopyrightsounds-api'
+ncs
+  .getArtistInfo(/* artist url here (/artist/760/srikar)*/)
+  .then(artist => {
+    //use the artist info here
+    console.log(artist)
+  })
+  .catch(err => {
+    //error handeling here
+    console.error(err)
+  })
+```
+
 ### download the newest song
 
 ```js
@@ -80,4 +98,78 @@ ncs
     //just simple error handeling
     console.error(err)
   })
+```
+
+### in the browser
+
+```js
+import * as ncs from 'nocopyrightsounds-api'
+
+ncs.web // add ".web" before the function 
+  .getMusic(/*page here*/)
+    .then(songs => {
+      //use the songs here
+      console.log(songs)
+    })
+    .catch(err => {
+      //error handeling here
+      console.error(err)
+    })
+```
+
+## using the client class
+
+### in nodejs
+
+```js
+import * as ncs from 'nocopyrightsounds-api'
+
+const client = new ncs.Client()
+
+client.getSongs()
+  .then(songs => {
+      //use the songs here
+      console.log(songs)
+    })
+    .catch(err => {
+      //error handeling here
+      console.error(err)
+    })
+```
+
+### in the browser
+
+```js
+import * as ncs from 'nocopyrightsounds-api'
+
+const client = new ncs.Client({
+  web: true,
+  proxy_url: /*add your proxy url here (use the NoCopyrightSounds-API-server found on npm)*/
+})
+```
+
+### with caching
+
+```js
+import * as ncs from 'nocopyrightsounds-api'
+
+const client = new ncs.Client({
+  use_cache: true,
+  cache_path: /*path for json file in nodejs or name for localstorage in browser*/
+})
+```
+#### refreshing the cache
+
+```js
+client.getCache().checkForNew()
+```
+
+### for debuging
+
+```js
+import * as ncs from 'nocopyrightsounds-api'
+
+const client = new ncs.Client({
+  detailed_log: true
+})
 ```

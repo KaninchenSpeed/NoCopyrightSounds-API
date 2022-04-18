@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom'
 import axios from 'axios'
 import parse_table from '../helpers/parse_table'
 
-import type Song from '../classes/song'
+import type Song from '../api/Song'
 
 export interface Filter {
   genre?: number

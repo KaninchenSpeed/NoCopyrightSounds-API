@@ -1,8 +1,8 @@
 import { JSDOM } from 'jsdom'
 import axios from 'axios'
 
-import type Artist from '../classes/artist'
-import type Song from '../classes/song'
+import type Artist from '../api/Artist'
+import type Song from '../api/Song'
 
 export const getMusic = async (page?: number): Promise<Song[]> => {
   const { data: html } = await axios.get<string>(

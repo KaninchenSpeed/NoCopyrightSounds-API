@@ -2,15 +2,9 @@ import { JSDOM } from 'jsdom'
 import axios from 'axios'
 import parse_table from '../helpers/parse_table'
 
-import type Artist from '../classes/artist'
-import type Song from '../classes/song'
-
-interface Artist_info extends Artist {
-  img?: string
-  genres: string[]
-  featured: Song[]
-  songs: Song[]
-}
+import type Artist from '../api/Artist'
+import type Song from '../api/Song'
+import type Artist_info from '../api/Artist_info'
 
 export const getArtistInfo = async (
   artist_url: string | Artist
