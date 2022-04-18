@@ -1,4 +1,4 @@
 export default interface Listener<Events, EventType> {
-    name: Events
-    cb: (e: EventType) => void
+  name: Events
+  cb: (e: EventType) => void
 }

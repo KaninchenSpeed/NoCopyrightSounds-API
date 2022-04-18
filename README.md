@@ -108,16 +108,16 @@ ncs
 ```js
 import * as ncs from 'nocopyrightsounds-api'
 
-ncs.web // add ".web" before the function 
+ncs.web // add ".web" before the function
   .getMusic(/*page here*/)
-    .then(songs => {
-      //use the songs here
-      console.log(songs)
-    })
-    .catch(err => {
-      //error handeling here
-      console.error(err)
-    })
+  .then(songs => {
+    //use the songs here
+    console.log(songs)
+  })
+  .catch(err => {
+    //error handeling here
+    console.error(err)
+  })
 ```
 
 ## using the client class
@@ -129,15 +129,16 @@ import * as ncs from 'nocopyrightsounds-api'
 
 const client = new ncs.Client()
 
-client.getSongs()
+client
+  .getSongs()
   .then(songs => {
-      //use the songs here
-      console.log(songs)
-    })
-    .catch(err => {
-      //error handeling here
-      console.error(err)
-    })
+    //use the songs here
+    console.log(songs)
+  })
+  .catch(err => {
+    //error handeling here
+    console.error(err)
+  })
 ```
 
 ### in the browser
@@ -161,6 +162,7 @@ const client = new ncs.Client({
   cache_path: /*path for json file in nodejs or name for localstorage in browser*/
 })
 ```
+
 #### refreshing the cache
 
 ```js
