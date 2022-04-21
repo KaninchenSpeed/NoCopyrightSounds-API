@@ -109,7 +109,7 @@ ncs
 import * as ncs from 'nocopyrightsounds-api'
 
 ncs.web // add ".web" before the function
-  .getMusic(/*page here*/)
+  .getMusic(/*add your proxy url here (use the NoCopyrightSounds-API-server found on npm)*/, /*page here*/)
   .then(songs => {
     //use the songs here
     console.log(songs)
