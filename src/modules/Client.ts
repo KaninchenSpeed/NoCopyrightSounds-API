@@ -7,24 +7,20 @@ import type Artist from '../api/Artist'
 import type { Filter } from './search'
 
 export interface NCSClientOptions {
-  proxy_url?: string
   use_cache?: boolean
   cache_path?: string
   detailed_log?: boolean
 }
 
 export default class NCSClient {
-  private proxy_url: string
   private detailed_log: boolean
   protected cache: SongCache | undefined
 
   public constructor(options: NCSClientOptions = {}) {
-    this.proxy_url = options.proxy_url ?? ''
     this.detailed_log = options.detailed_log ?? false
 
     if (options.use_cache) {
       this.cache = new SongCache({
-        proxy_url: this.proxy_url,
         cache_path: options.cache_path,
         detailed_log: this.detailed_log
       })
