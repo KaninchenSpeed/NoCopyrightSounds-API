@@ -3,6 +3,7 @@
     "target": "ES5",
     "strict": true,
     "declaration": true,
+    "esModuleInterop": true,
     "moduleResolution": "Node"
   },
   "include": ["./src"]
