@@ -33,13 +33,15 @@ export default (table: Element) => {
     const name = player.getAttribute('data-track')!
     const song_url = player.getAttribute('data-url')!
 
-    const artists_el = player.getAttribute('data-artist')!
-    const artists: Artist[] = artists_el.split(', ').map(art => {
-      const art_el = new JSDOM(art).window.document.querySelector('a')!
-      const url = art_el.getAttribute('href')!
-      const name = art_el.innerHTML
-      return { name, url }
-    })
+    const artists_el = player.getAttribute('data-artist')
+    const artists: Artist[] = artists_el
+      ? artists_el.split(', ').map(art => {
+          const art_el = new JSDOM(art).window.document.querySelector('a')!
+          const url = art_el.getAttribute('href')!
+          const name = art_el.innerHTML
+          return { name, url }
+        })
+      : []
 
     const tags_els = tags_col.querySelectorAll('a')
     const tags = Array.from(tags_els).map<Tag>(el => {
