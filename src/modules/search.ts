@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 import axios from 'axios'
-import parse_table from '../helpers/parseTable'
+import parseTable from '../helpers/parseTable'
 
 import type Song from '../api/Song'
 
@@ -22,6 +22,6 @@ export const search = async (filter: Filter, page = 1): Promise<Song[]> => {
     const dom = new JSDOM(html)
     const document = dom.window.document
     const table = document.querySelector('.tablesorter tbody')!
-    const songs = parse_table(table)
+    const songs = parseTable(table)
     return songs
 }
