@@ -1,16 +1,14 @@
 # NoCopyrightSounds API
 
-This is a webscraper designed to provide api like access to the NCS website
+This is a webscraper designed to provide api like access to the NCS website.
 
 ## Features
 
 -   Listing all Songs
 -   Searching (using the search from the website)
--   getting artist info
+-   Getting artist info
 
--   caching songs (client class only)
-
-## import
+## Import
 
 ```js
 //module (recommended)
@@ -21,24 +19,22 @@ const ncs = require('nocopyrightsounds-api')
 ```
 
 ### Typescript
+
 Don't forget to set `esModuleInterop` to `true`
 
 ## Examples
+
+**Top level await is only available with es modules in NodeJS.**
 
 ## Get all songs from the first page in the music library
 
 ```js
 import ncs from 'nocopyrightsounds-api'
 
-ncs.getMusic(/*page here*/)
-    .then((songs) => {
-        //use the songs here
-        console.log(songs)
-    })
-    .catch((err) => {
-        //error handeling here
-        console.error(err)
-    })
+const songs = await ncs.getSongs(/* page here */)
+
+// use the songs here
+console.log(songs)
 ```
 
 ## Get all songs from the first page of house songs
@@ -46,56 +42,48 @@ ncs.getMusic(/*page here*/)
 ```js
 import ncs from 'nocopyrightsounds-api'
 
-ncs.search(
+const results = await ncs.search(
     {
-        genre: 10
-    } /*page here*/
+        // filter
+        genre: ncs.Genre.House
+    }
+    /* page here */
 )
-    .then((songs) => {
-        //use the songs here
-        console.log(songs)
-    })
-    .catch((err) => {
-        //error handeling here
-        console.error(err)
-    })
+
+// use the results here
+console.log(results)
 ```
 
 ## Get artist info
 
 ```js
 import ncs from 'nocopyrightsounds-api'
-ncs.getArtistInfo(/* artist url here (/artist/760/srikar)*/)
-    .then((artist) => {
-        //use the artist info here
-        console.log(artist)
-    })
-    .catch((err) => {
-        //error handeling here
-        console.error(err)
-    })
+
+const artistInfo = await ncs.getArtistInfo(/* artist url here (/artist/760/srikar) */)
+
+// use the artistinfo info here
+console.log(artistInfo)
 ```
 
 ## Download the newest song
 
 ```js
 import ncs from 'nocopyrightsounds-api'
-import fs from 'fs'
-import https from 'https'
+import axios from 'axios'
+import fs from 'fs/promises'
 
-ncs.getMusic()
-    .then(async (songs) => {
-        const newest = songs[0]
-        const directUrl = newest.songUrl
+// getting the newest 20 songs (20 songs = 1 page)
+const songs = await ncs.getSongs()
 
-        const writeStream = fs.createWriteStream(`${newest.name}.mp3`)
+const newestSong = songs[0]
+const audioUrl = newestSong.download.regular
 
-        https.get(directUrl, (res) => {
-            res.pipe(writeStream)
-        })
-    })
-    .catch((err) => {
-        //just simple error handeling
-        console.error(err)
-    })
+if (!audioUrl) throw "This Song doesn't have a regular (non instrumental) version!"
+
+// downloading audio
+const { data: audioFile } = await axios.get(audioUrl, {
+    responseType: 'arraybuffer'
+})
+
+await fs.writeFile(`${newestSong.name}.mp3`, audioFile)
 ```
