@@ -32,22 +32,24 @@ export default (table: Element) => {
             : []
 
         const tags_els = tagsCol.querySelectorAll('a')
-        const tags = Array.from(tags_els).map<Tag>((el) => {
-            const name = el.innerHTML
-            const css = el.style.backgroundColor
-            const [r, g, b] = css
-                .replace('rgb(', '')
-                .replace(')', '')
-                .split(', ')
-                .map((v) => Number(v))
-            const url = el.href
-            const mood = url.split('?')[1].replace('mood=', '')
-            return {
-                name,
-                color: { r, g, b },
-                mood: Number(mood)
-            }
-        })
+        const tags = Array.from(tags_els)
+            .map<Tag>((el) => {
+                const name = el.innerHTML
+                const css = el.style.backgroundColor
+                const [r, g, b] = css
+                    .replace('rgb(', '')
+                    .replace(')', '')
+                    .split(', ')
+                    .map((v) => Number(v))
+                const url = el.href
+                const mood = url.split('?')[1].replace('mood=', '')
+                return {
+                    name,
+                    color: { r, g, b },
+                    mood: Number(mood)
+                }
+            })
+            .filter((tag) => !Number.isNaN(tag.mood))
 
         const availableTypes = tracksCol.innerHTML.toLowerCase()
 
