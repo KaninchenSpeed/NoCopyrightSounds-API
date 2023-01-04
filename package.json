@@ -9,8 +9,8 @@
         "url": "https://github.com/KaninchenSpeed/NoCopyrightSounds-API"
     },
     "scripts": {
-        "build": "tsc --module CommonJS --outDir dist/cjs && tsc --module ES2020 --outDir dist/esm && cp -r ./src/api ./dist/cjs && cp -r ./src/api ./dist/esm",
-        "buildWatch": "tsc --watch --module CommonJS --outDir dist/cjs && tsc --watch --module ES2020 --outDir dist/esm",
+        "build": "tsc --module CommonJS --outDir dist/cjs ; tsc --module ESNext --outDir dist/esm",
+        "buildWatch": "tsc --watch --module CommonJS --outDir dist/cjs ; tsc --watch --module ESNext --outDir dist/esm",
         "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
         "prepublishOnly": "npm run build && npm run prettier",
         "prettier": "prettier --write .",
