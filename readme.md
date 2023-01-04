@@ -13,21 +13,22 @@ This is a webscraper designed to provide api like access to the NCS website
 ## import
 
 ```js
-//module (reccomended)
-import * as ncs from 'nocopyrightsounds-api'
+//module (recommended)
+import ncs from 'nocopyrightsounds-api'
 
 //CommonJS
 const ncs = require('nocopyrightsounds-api')
 ```
 
-## examples
+### Typescript
+Don't forget to set `esModuleInterop` to `true`
 
-## direct API Access
+## Examples
 
-### get all songs from the first page in the music library
+## Get all songs from the first page in the music library
 
 ```js
-import * as ncs from 'nocopyrightsounds-api'
+import ncs from 'nocopyrightsounds-api'
 
 ncs.getMusic(/*page here*/)
     .then((songs) => {
@@ -40,10 +41,10 @@ ncs.getMusic(/*page here*/)
     })
 ```
 
-### get all songs from the first page of house songs
+## Get all songs from the first page of house songs
 
 ```js
-import * as ncs from 'nocopyrightsounds-api'
+import ncs from 'nocopyrightsounds-api'
 
 ncs.search(
     {
@@ -60,10 +61,10 @@ ncs.search(
     })
 ```
 
-### get artist info
+## Get artist info
 
 ```js
-import * as ncs from 'nocopyrightsounds-api'
+import ncs from 'nocopyrightsounds-api'
 ncs.getArtistInfo(/* artist url here (/artist/760/srikar)*/)
     .then((artist) => {
         //use the artist info here
@@ -75,11 +76,11 @@ ncs.getArtistInfo(/* artist url here (/artist/760/srikar)*/)
     })
 ```
 
-### download the newest song
+## Download the newest song
 
 ```js
-import * as ncs from 'nocopyrightsounds-api'
-import * as fs from 'fs'
+import ncs from 'nocopyrightsounds-api'
+import fs from 'fs'
 import https from 'https'
 
 ncs.getMusic()
@@ -97,50 +98,4 @@ ncs.getMusic()
         //just simple error handeling
         console.error(err)
     })
-```
-
-## using the client class
-
-```js
-import * as ncs from 'nocopyrightsounds-api'
-
-const client = new ncs.Client()
-
-client
-    .getSongs()
-    .then((songs) => {
-        //use the songs here
-        console.log(songs)
-    })
-    .catch((err) => {
-        //error handeling here
-        console.error(err)
-    })
-```
-
-### with caching
-
-```js
-import * as ncs from 'nocopyrightsounds-api'
-
-const client = new ncs.Client({
-  use_cache: true,
-  cache_path: /*path for json file in nodejs or name for localstorage in browser*/
-})
-```
-
-#### refreshing the cache
-
-```js
-client.getCache().checkForNew()
-```
-
-### for debuging
-
-```js
-import * as ncs from 'nocopyrightsounds-api'
-
-const client = new ncs.Client({
-    detailed_log: true
-})
 ```
