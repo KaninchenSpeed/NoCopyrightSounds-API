@@ -12,11 +12,9 @@ export interface Filter {
 
 export const search = async (filter: Filter, page = 1): Promise<Song[]> => {
     const { data: html } = await axios.get<string>(
-        `https://ncs.io/music-search?page=${page}${
-            filter.genre ? `&genre=${filter.genre}` : ''
-        }${filter.mood ? `&mood=${filter.mood}` : ''}${
-            filter.search ? `&q=${filter.search}` : ''
-        }`,
+        `https://ncs.io/music-search?page=${page}${filter.genre ? `&genre=${filter.genre}` : ''}${
+            filter.mood ? `&mood=${filter.mood}` : ''
+        }${filter.search ? `&q=${filter.search}` : ''}`,
         {
             responseType: 'text'
         }

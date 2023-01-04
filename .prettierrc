@@ -5,7 +5,9 @@
     "singleQuote": true,
     "bracketSpacing": true,
     "trailingComma": "none",
-    "arrowParens": "avoid",
+    "arrowParens": "always",
+    "printWidth": 100,
+    "bracketSameLine": true,
     "overrides": [
         {
             "files": ".prettierrc",

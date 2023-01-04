@@ -8,7 +8,7 @@ const client = new ncs.Client({
 
 client.getCache()?.addEventListener('ready', () => {
     console.log('ready')
-    client.getSongs().then(res => {
+    client.getSongs().then((res) => {
         console.log('results client getMusic')
         console.log(res[0], res.length)
     })

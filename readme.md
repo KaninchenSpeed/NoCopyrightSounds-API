@@ -30,11 +30,11 @@ const ncs = require('nocopyrightsounds-api')
 import * as ncs from 'nocopyrightsounds-api'
 
 ncs.getMusic(/*page here*/)
-    .then(songs => {
+    .then((songs) => {
         //use the songs here
         console.log(songs)
     })
-    .catch(err => {
+    .catch((err) => {
         //error handeling here
         console.error(err)
     })
@@ -50,11 +50,11 @@ ncs.search(
         genre: 10
     } /*page here*/
 )
-    .then(songs => {
+    .then((songs) => {
         //use the songs here
         console.log(songs)
     })
-    .catch(err => {
+    .catch((err) => {
         //error handeling here
         console.error(err)
     })
@@ -65,11 +65,11 @@ ncs.search(
 ```js
 import * as ncs from 'nocopyrightsounds-api'
 ncs.getArtistInfo(/* artist url here (/artist/760/srikar)*/)
-    .then(artist => {
+    .then((artist) => {
         //use the artist info here
         console.log(artist)
     })
-    .catch(err => {
+    .catch((err) => {
         //error handeling here
         console.error(err)
     })
@@ -83,17 +83,17 @@ import * as fs from 'fs'
 import https from 'https'
 
 ncs.getMusic()
-    .then(async songs => {
+    .then(async (songs) => {
         const newest = songs[0]
         const directUrl = newest.songUrl
 
         const writeStream = fs.createWriteStream(`${newest.name}.mp3`)
 
-        https.get(directUrl, res => {
+        https.get(directUrl, (res) => {
             res.pipe(writeStream)
         })
     })
-    .catch(err => {
+    .catch((err) => {
         //just simple error handeling
         console.error(err)
     })
@@ -108,11 +108,11 @@ const client = new ncs.Client()
 
 client
     .getSongs()
-    .then(songs => {
+    .then((songs) => {
         //use the songs here
         console.log(songs)
     })
-    .catch(err => {
+    .catch((err) => {
         //error handeling here
         console.error(err)
     })

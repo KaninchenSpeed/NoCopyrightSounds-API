@@ -6,16 +6,11 @@ import type Artist from '../api/Artist'
 import type Song from '../api/Song'
 import type Artist_info from '../api/ArtistInfo'
 
-export const getArtistInfo = async (
-    artist_url: string | Artist
-): Promise<Artist_info> => {
+export const getArtistInfo = async (artist_url: string | Artist): Promise<Artist_info> => {
     if (typeof artist_url != 'string') artist_url = artist_url.url
-    const { data: html } = await axios.get<string>(
-        `https://ncs.io${artist_url}`,
-        {
-            responseType: 'text'
-        }
-    )
+    const { data: html } = await axios.get<string>(`https://ncs.io${artist_url}`, {
+        responseType: 'text'
+    })
 
     const dom = new JSDOM(html)
     const document = dom.window.document.body
