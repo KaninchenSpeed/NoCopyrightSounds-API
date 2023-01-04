@@ -6,7 +6,7 @@ import type Tag from '../api/Tag'
 
 export default (table: Element): Song[] => {
     if (!table) return []
-    
+
     const rows = table.querySelectorAll('tr')
     const songs = Array.from(rows).map<Song>((row) => {
         const [playerCol, genreCol, imgCol, mainCol, tagsCol, dateCol, tracksCol, downloadCol] =

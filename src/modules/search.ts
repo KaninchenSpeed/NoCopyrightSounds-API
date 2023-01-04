@@ -8,13 +8,18 @@ export interface Filter {
     genre?: number
     mood?: number
     search?: string
+    version?: 'regular' | 'instrumental' | 'both'
 }
 
 export const search = async (filter: Filter, page = 0): Promise<Song[]> => {
     const { data: html } = await axios.get<string>(
-        `https://ncs.io/music-search?page=${page + 1}${filter.genre ? `&genre=${filter.genre}` : ''}${
-            filter.mood ? `&mood=${filter.mood}` : ''
-        }${filter.search ? `&q=${filter.search}` : ''}`,
+        `https://ncs.io/music-search?page=${page + 1}${
+            filter.genre ? `&genre=${filter.genre}` : ''
+        }${filter.mood ? `&mood=${filter.mood}` : ''}${filter.search ? `&q=${filter.search}` : ''}${
+            filter.version
+                ? `&version=${filter.version == 'both' ? 'regular-instrumental' : filter.version}`
+                : ''
+        }`,
         {
             responseType: 'text'
         }
