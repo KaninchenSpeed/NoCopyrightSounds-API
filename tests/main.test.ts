@@ -1,8 +1,8 @@
 import ncs from '../src/main'
 
-console.log('running getMusic')
+console.log('running getSongs')
 ncs.getSongs().then((res) => {
-    console.log('results getMusic', res.length)
+    console.log('results getSongs', res.length)
     console.dir(res[0], { depth: null })
 })
 
