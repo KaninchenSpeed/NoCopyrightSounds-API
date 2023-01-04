@@ -12,10 +12,10 @@
         "build": "tsc --module CommonJS --outDir dist/cjs ; tsc --module ESNext --outDir dist/esm",
         "buildWatch": "tsc --watch --module CommonJS --outDir dist/cjs ; tsc --watch --module ESNext --outDir dist/esm",
         "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
-        "prepublishOnly": "npm run build && npm run prettier",
+        "prepublishOnly": "npm run build ; npm run prettier",
         "prettier": "prettier --write .",
-        "test": "tsc -p tests/tsconfig.test.json && node --enable_source_maps tests/dist/tests/main.test.js",
-        "testCache": "tsc -p tests/tsconfig.test.json && node --enable_source_maps tests/dist/tests/cache.test.js"
+        "test": "tsc -p tests/tsconfig.test.json ; node --enable_source_maps tests/dist/tests/main.test.js",
+        "testCache": "tsc -p tests/tsconfig.test.json ; node --enable_source_maps tests/dist/tests/cache.test.js"
     },
     "keywords": [],
     "author": "KaninchenSpeed",
