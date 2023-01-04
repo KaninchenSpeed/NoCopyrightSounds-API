@@ -1,4 +1,4 @@
-import * as ncs from '../src/main'
+import ncs from '../src/main'
 
 console.log('running getMusic')
 ncs.getMusic().then((res) => {

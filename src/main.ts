@@ -7,3 +7,5 @@ export type { default as tag } from './api/Tag'
 export type { default as Artist } from './api/Artist'
 export type { default as ArtistInfo } from './api/ArtistInfo'
 export type { default as Color } from './api/Color'
+
+export * as default from './main'
