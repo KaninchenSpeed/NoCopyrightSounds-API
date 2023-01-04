@@ -4,8 +4,9 @@ import type Song from '../api/Song'
 import type Artist from '../api/Artist'
 import type Tag from '../api/Tag'
 
-export default (table: Element) => {
+export default (table: Element): Song[] => {
     if (!table) return []
+    
     const rows = table.querySelectorAll('tr')
     const songs = Array.from(rows).map<Song>((row) => {
         const [playerCol, genreCol, imgCol, mainCol, tagsCol, dateCol, tracksCol, downloadCol] =
