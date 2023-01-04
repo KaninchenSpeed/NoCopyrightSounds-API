@@ -1,11 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "CommonJS",
-    "outDir": "dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Node",
-    "sourceMap": true
-  }
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "outDir": "dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution": "Node",
+        "sourceMap": true
+    }
 }

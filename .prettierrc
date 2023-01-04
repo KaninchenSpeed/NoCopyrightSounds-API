@@ -1,15 +1,15 @@
 {
-  "endOfLine": "lf",
-  "semi": false,
-  "tabWidth": 2,
-  "singleQuote": true,
-  "bracketSpacing": true,
-  "trailingComma": "none",
-  "arrowParens": "avoid",
-  "overrides": [
-    {
-      "files": ".prettierrc",
-      "options": { "parser": "json" }
-    }
-  ]
+    "endOfLine": "lf",
+    "semi": false,
+    "tabWidth": 4,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "none",
+    "arrowParens": "avoid",
+    "overrides": [
+        {
+            "files": ".prettierrc",
+            "options": { "parser": "json" }
+        }
+    ]
 }
