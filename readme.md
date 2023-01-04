@@ -44,7 +44,7 @@ Don't forget to set `esModuleInterop` to `true`
 
 **Top level await is only available with es modules in NodeJS.**
 
-## Get all songs from the first page in the music library
+### Get all songs from the first page in the music library
 
 ```js
 import ncs from 'nocopyrightsounds-api'
@@ -55,7 +55,7 @@ const songs = await ncs.getSongs(/* page here */)
 console.log(songs)
 ```
 
-## Get all songs from the first page of house songs
+### Get all songs from the first page of house songs
 
 ```js
 import ncs from 'nocopyrightsounds-api'
@@ -72,7 +72,7 @@ const results = await ncs.search(
 console.log(results)
 ```
 
-## Get artist info
+### Get artist info
 
 ```js
 import ncs from 'nocopyrightsounds-api'
@@ -83,7 +83,7 @@ const artistInfo = await ncs.getArtistInfo(/* artist url here (/artist/760/srika
 console.log(artistInfo)
 ```
 
-## Download the newest song
+### Download the newest song
 
 ```js
 import ncs from 'nocopyrightsounds-api'
