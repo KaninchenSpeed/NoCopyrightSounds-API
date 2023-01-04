@@ -2,11 +2,12 @@ import { JSDOM } from 'jsdom'
 import axios from 'axios'
 import parseTable from '../helpers/parseTable'
 
+import { Genre, Mood } from '../helpers/enums'
 import type Song from '../api/Song'
 
 export interface Filter {
-    genre?: number
-    mood?: number
+    genre?: Genre
+    mood?: Mood
     search?: string
     version?: 'regular' | 'instrumental' | 'both'
 }

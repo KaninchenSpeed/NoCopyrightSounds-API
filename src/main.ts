@@ -1,6 +1,7 @@
 export * from './modules/musiclist'
 export * from './modules/search'
 export * from './modules/artist'
+export * from './helpers/enums'
 
 export type { default as Song } from './api/Song'
 export type { default as tag } from './api/Tag'
