@@ -8,7 +8,8 @@ ncs.getMusic().then((res) => {
 
 console.log('running Search')
 ncs.search({
-    search: 'you'
+    search: 'you',
+    genre: ncs.Genre.Electronic
 }).then((res) => {
     console.log('results Search', res.length)
     console.dir(res[0], { depth: null })
