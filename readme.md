@@ -8,6 +8,24 @@ This is a webscraper designed to provide api like access to the NCS website.
 -   Searching (using the search from the website)
 -   Getting artist info
 
+## Updating from 2.1.3
+
+### Breaking changes
+
+-   Page indices start from 0 insted of 1
+-   Rename: `getMusic(page)` => `getSongs(page)`
+-   **Song object**
+    -   `songUrl` => `previewUrl`
+    -   `imageUrl` => `coverUrl`
+    -   Date is now a Date object
+
+### New stuff
+
+-   Enums for Genre and Mood
+-   Filter for instrumental songs
+-   **Song object**
+    -   download section with regular and/or instrumental downloads
+
 ## Import
 
 ```js
