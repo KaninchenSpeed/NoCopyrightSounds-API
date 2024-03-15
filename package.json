@@ -1,6 +1,6 @@
 {
     "name": "nocopyrightsounds-api",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "description": "A webscraper for the NoCopyrightSounds website to provide an API",
     "main": "dist/cjs/main.js",
     "module": "dist/esm/main.js",
