@@ -9,15 +9,20 @@
         "url": "https://github.com/KaninchenSpeed/NoCopyrightSounds-API"
     },
     "scripts": {
-        "build": "tsc --module CommonJS --outDir dist/cjs ; tsc --module ESNext --outDir dist/esm",
-        "buildWatch": "tsc --watch --module CommonJS --outDir dist/cjs ; tsc --watch --module ESNext --outDir dist/esm",
+        "clean": "rm -rf dist",
+        "build": "tsc --module CommonJS --outDir dist/cjs; tsc --module ESNext --outDir dist/esm; cp -r src/api dist/cjs/api; cp -r src/api dist/esm/api",
+        "buildWatch": "tsc --watch --module CommonJS --outDir dist/cjs; tsc --watch --module ESNext --outDir dist/esm",
         "dev": "concurrently \"npm run buildWatch\" \"npm run devStart\"",
-        "prepublishOnly": "npm run build ; npm run prettier",
+        "prepublishOnly": "npm run clean; npm run build; npm run prettier",
         "prettier": "prettier --write .",
         "test": "tsc -p tests/tsconfig.test.json ; node --enable_source_maps tests/dist/tests/main.test.js",
         "testCache": "tsc -p tests/tsconfig.test.json ; node --enable_source_maps tests/dist/tests/cache.test.js"
     },
-    "keywords": [],
+    "keywords": [
+        "NoCopyrightSounds",
+        "ncs",
+        "scraper"
+    ],
     "author": "KaninchenSpeed",
     "license": "GPL-3.0",
     "devDependencies": {
@@ -30,5 +35,8 @@
     "dependencies": {
         "axios": "^1.6.7",
         "jsdom": "^24.0.0"
-    }
+    },
+    "files": [
+        "dist"
+    ]
 }
