@@ -13,7 +13,7 @@ This is a webscraper designed to provide api like access to the NCS website.
 ### Breaking changes
 
 -   Removed Client class
--   Page indices start from 0 insted of 1
+-   Page indices start from 0 instead of 1
 -   Rename: `getMusic(page)` => `getSongs(page)`
 -   **Song object**
     -   `songUrl` => `previewUrl`
